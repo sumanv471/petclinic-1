@@ -6,8 +6,8 @@ pipeline {
 	}
 	
 	environment {
-		def tomcatDevIp = '13.72.74.55'
-		def tomcatHome = '/home/sonar/tomcat8'
+		def tomcatDevIp = '40.87.89.207'
+		def tomcatHome = '/home/nexus/tomcat8'
         def tomcatStart = "${tomcatHome}/bin/startup.sh"
         def tomcatStop = "${tomcatHome}/bin/shutdown.sh"
 	}
@@ -48,15 +48,15 @@ pipeline {
 				
 				stage('Nexus Uploader') {
 					steps {
-						nexusArtifactUploader artifacts: [[artifactId: 'spring-petclinic', classifier: '', file: 'target/petclinic.war', type: 'war']], credentialsId: 'nexuscred', groupId: 'org.springframework.samples', nexusUrl: '23.96.98.151:8081', nexusVersion: 'nexus3', protocol: 'http', repository: 'maven-releases', version: "4.2.${BUILD_NUMBER}"
+						nexusArtifactUploader artifacts: [[artifactId: 'spring-petclinic', classifier: '', file: 'target/petclinic.war', type: 'war']], credentialsId: 'nexuscred', groupId: 'org.springframework.samples', nexusUrl: '40.87.89.207:8081', nexusVersion: 'nexus3', protocol: 'http', repository: 'maven-releases', version: "4.2.${BUILD_NUMBER}"
 					}
 				}
 				
 				stage('Deploy') {
 					steps {
-                                		sh "scp -o StrictHostKeyChecking=no target/petclinic.war sonar@${tomcatDevIp}:/home/sonar/tomcat8/webapps/myweb.war"
-                                		sh "ssh sonar@${tomcatDevIp} ${tomcatStop}"
-                                		sh "ssh sonar@${tomcatDevIp} ${tomcatStart}"
+                                		sh "scp -o StrictHostKeyChecking=no target/petclinic.war nexus@${tomcatDevIp}:/home/sonar/tomcat8/webapps/myweb.war"
+                                		sh "ssh nexus@${tomcatDevIp} ${tomcatStop}"
+                                		sh "ssh nexus@${tomcatDevIp} ${tomcatStart}"
                             		}
 				}
 			}
