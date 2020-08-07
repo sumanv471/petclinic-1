@@ -54,7 +54,7 @@ pipeline {
 				
 				stage('Deploy') {
 					steps {
-                                		sh "scp -o StrictHostKeyChecking=no target/petclinic.war nexus@${tomcatDevIp}:/home/nnexus/tomcat8/webapps/myweb.war"
+                                		sh "scp -o StrictHostKeyChecking=no target/petclinic.war nexus@${tomcatDevIp}:/home/nexus/tomcat8/webapps/myweb.war"
                                 		sh "ssh nexus@${tomcatDevIp} ${tomcatStop}"
                                 		sh "ssh nexus@${tomcatDevIp} ${tomcatStart}"
                             		}
