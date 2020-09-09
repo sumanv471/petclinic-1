@@ -15,7 +15,7 @@ pipeline {
 	stages {
 		stage('Checkout') {
 			steps {
-				git url: 'https://github.com/akmaharshi/petclinic.git'
+				git url: 'https://github.com/sumanv471/petclinic-1.git'
 			}
 		}
 
