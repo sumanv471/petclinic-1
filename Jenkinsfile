@@ -55,8 +55,8 @@ pipeline {
 				stage('Deploy') {
 					steps {
                                 		sh "scp -o StrictHostKeyChecking=no target/petclinic.war ubuntu@${tomcatDevIp}:/home/ubuntu/tomcat8/webapps/myweb.war"
-                                		#sh "ssh ubuntu@${tomcatDevIp} ${tomcatStop}"
-                                		#sh "ssh ubuntu@${tomcatDevIp} ${tomcatStart}"
+                                		//sh "ssh ubuntu@${tomcatDevIp} ${tomcatStop}"
+                                		//sh "ssh ubuntu@${tomcatDevIp} ${tomcatStart}"
                             		}
 				}
 			}
