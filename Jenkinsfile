@@ -55,8 +55,8 @@ pipeline {
 				
 				stage("bulding docker image and deploy") {
                     steps {
-                        scp -o StrictHostKeyChecking=no target/petclinic.war ec2-user@${dockerDevIp}:/home/ec2-user/docker/myweb.war
-                        scp -o StrictHostKeyChecking=no Dockerfile ec2-user@${dockerDevIp}:/home/ec2-user/docker/Dockerfile
+                        sh "scp -o StrictHostKeyChecking=no target/petclinic.war ec2-user@${dockerDevIp}:/home/ec2-user/docker/myweb.war"
+                        sh "scp -o StrictHostKeyChecking=no Dockerfile ec2-user@${dockerDevIp}:/home/ec2-user/docker/Dockerfile"
                 script                
                 {
                                     sshPublisher(
