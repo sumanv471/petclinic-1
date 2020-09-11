@@ -67,7 +67,7 @@ pipeline {
                                                     verbose: true,
                                                     transfers:[   
                                                         sshTransfer(
-                                                                execCommand: "cd docker && docker image prune -a --force && docker build -t petclinic . --no-cache && docker run -itd -p 8080:8080 petclinic"
+                                                                execCommand: "cd docker && docker image prune -a --force && docker build -t petclinic . --no-cache && docker run -itd --name petclinic8 -p 8080:8080 petclinic"
                                                         )
                                                     ]
                                                 )
