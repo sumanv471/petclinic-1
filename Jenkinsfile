@@ -11,8 +11,6 @@ pipeline {
 		def tomcatHome = '/home/ubuntu/tomcat8'
         def tomcatStart = "${tomcatHome}/bin/startup.sh"
         def tomcatStop = "${tomcatHome}/bin/shutdown.sh"
-		def dockerstop = docker stop "${docker ps -a -q}"
-		def dockerrm = docker rm -f "${docker ps -a -q}"
 	}
 
 	stages {
@@ -64,7 +62,7 @@ pipeline {
                                                     verbose: true,
                                                     transfers:[   
                                                         sshTransfer(
-								execCommand:" ${dockestop} && ${dockerrm} && docker system prune -a --force && cd docker && docker build -t petclinic . --no-cache && docker run -itd --name petclinic8 -p 8080:8080 petclinic"
+								execCommand:" docker stop petclinic8 && docker rm petclinic8 && docker system prune -a --force && cd docker && docker build -t petclinic . --no-cache && docker run -itd --name petclinic8 -p 8080:8080 petclinic"
                                                         )
                                                     ]
                                                 )
