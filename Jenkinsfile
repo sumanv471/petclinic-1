@@ -50,8 +50,8 @@ pipeline {
 				
 				stage("bulding docker image and deploy") {
                     steps {
-                        //sh "scp -o StrictHostKeyChecking=no target/petclinic.war ec2-user@${dockerDevIp}:/home/ec2-user/docker/myweb.war"
-                        //sh "scp -o StrictHostKeyChecking=no Dockerfile ec2-user@${dockerDevIp}:/home/ec2-user/docker/Dockerfile"
+                          sh "scp -o StrictHostKeyChecking=no target/petclinic.war ec2-user@${dockerDevIp}:/home/ec2-user/docker/myweb.war"
+                          sh "scp -o StrictHostKeyChecking=no Dockerfile ec2-user@${dockerDevIp}:/home/ec2-user/docker/Dockerfile"
                 script                
                 {
                                     sshPublisher(
@@ -62,7 +62,7 @@ pipeline {
                                                     verbose: true,
                                                     transfers:[   
                                                         sshTransfer(
-                                                                execCommand: "cd docker && docker stop ${docker ps -aq} && docker rm -f ${docker ps -aq} && docker image prune -a --force && docker build -t petclinic . --no-cache && docker run -itd --name petclinic8 -p 8080:8080 petclinic"
+                                                                //execCommand: "cd docker && docker stop ${docker ps -aq} && docker rm -f ${docker ps -aq} && docker image prune -a --force && docker build -t petclinic . --no-cache && docker run -itd --name petclinic8 -p 8080:8080 petclinic"
                                                         )
                                                     ]
                                                 )
