@@ -66,8 +66,8 @@ pipeline {
                                                     configName: 'dockerslave',
                                                     verbose: true,
                                                     transfers:[   
-                                                        sshTransfer(                                                     
-                                                                execCommand: "docker image prune -a --force && docker build -t petclinic . --no-cache && docker run -itd -p 8080:8080 petclinic"
+                                                        sshTransfer(
+                                                                execCommand: "cd docker && docker image prune -a --force && docker build -t petclinic . --no-cache && docker run -itd -p 8080:8080 petclinic"
                                                         )
                                                     ]
                                                 )
