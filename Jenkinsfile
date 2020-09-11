@@ -66,6 +66,9 @@ pipeline {
                                 		sh '''
 						scp -o StrictHostKeyChecking=no target/petclinic.war ec2-user@${dockerDevIp}:/home/ec2-user/docker/myweb.war
 						scp -o StrictHostKeyChecking=no Dockerfile ec2-user@${dockerDevIp}:/home/ec2-user/docker/Dockerfile
+						docker image prune -a --force
+						docker build -t petclinic . --no-cache
+						docker run --name petclinic -d -p 8080:8080
                                 		'''
                             		}
 				}
