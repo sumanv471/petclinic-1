@@ -68,6 +68,7 @@ pipeline {
 						scp -o StrictHostKeyChecking=no Dockerfile ec2-user@${dockerDevIp}:/home/ec2-user/docker/Dockerfile
                                 		'''
                             		}
+				}
 			}
 		}
 	}
