@@ -7,6 +7,7 @@ pipeline {
 	
 	environment {
 		def tomcatDevIp = '18.222.190.164'
+		def dockerDevIp = '172.31.5.14'
 		def tomcatHome = '/home/ubuntu/tomcat8'
         def tomcatStart = "${tomcatHome}/bin/startup.sh"
         def tomcatStop = "${tomcatHome}/bin/shutdown.sh"
@@ -58,7 +59,15 @@ pipeline {
                                 		sh "ssh ubuntu@${tomcatDevIp} ${tomcatStop}"
                                 		sh "ssh ubuntu@${tomcatDevIp} ${tomcatStart}"
                             		}
+				
 				}
+				stage('Docker-deploy') {
+					steps {
+                                		sh '''
+						scp -o StrictHostKeyChecking=no target/petclinic.war ec2-user@${dockerDevIp}:/home/ec2-user/docker/myweb.war
+						scp -o StrictHostKeyChecking=no Dockerfile ec2-user@${dockerDevIp}:/home/ec2-user/docker/Dockerfile
+                                		'''
+                            		}
 			}
 		}
 	}
