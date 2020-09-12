@@ -5,7 +5,7 @@ MAINTAINER "sumaanvemuri@gmail.com"
 
 
 # copy war file on to container 
-ADD ./target/myweb.war /usr/local/tomcat/webapps/
+ADD ./target/petlinic.war /usr/local/tomcat/webapps/
 
 # tell docker what port to expose
 EXPOSE 8080
