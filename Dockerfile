@@ -5,10 +5,10 @@ MAINTAINER "sumaanvemuri@gmail.com"
 
 
 # copy war file on to container 
-add ./target/myweb.war /usr/local/tomcat/webapps/
+ADD ./target/myweb.war /usr/local/tomcat/webapps/
 
 # tell docker what port to expose
 EXPOSE 8080
 
 #To start tomcat service
-cmd ["catalina.sh", "run"]
+CMD ["catalina.sh", "run"]
