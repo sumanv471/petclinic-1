@@ -49,15 +49,14 @@ pipeline {
 				}
 				
 				stage("bulding docker image and deploy") {
-                    steps {
-                         // sh "scp -o StrictHostKeyChecking=no target/petclinic.war ec2-user@${dockerDevIp}:/home/ec2-user/docker/myweb.war"
-                          //sh "scp -o StrictHostKeyChecking=no Dockerfile ec2-user@${dockerDevIp}:/home/ec2-user/docker/Dockerfile"
-              	 		sshagent(['Docker_ec2-user']) {
-					sh "scp -o StrictHostKeyChecking=no target/petclinic.war ec2-user@${dockerDevIp}:/home/ec2-user/docker/myweb.war"	   
-				   }
-                    }
+                 		   steps {
+              	 				sshagent(['Docker_ec2-user']) {
+							sh "scp -o StrictHostKeyChecking=no target/petclinic.war ec2-user@${dockerDevIp}:/home/ec2-user/docker/myweb.war"	   
+				   		        sh "scp -o StrictHostKeyChecking=no Dockerfile ec2-user@${dockerDevIp}:/home/ec2-user/docker/Dockerfile"
+						}
+                  			}
 
-            } 
+            			} 
 				
 			}
 		}
