@@ -7,7 +7,7 @@ pipeline {
 	
 	environment {
 		def tomcatDevIp = '18.222.190.164'
-		def dockerDevIp = '172.31.5.14'
+		def dockerDevIp = '3.22.249.107'
 		def tomcatHome = '/home/ubuntu/tomcat8'
         def tomcatStart = "${tomcatHome}/bin/startup.sh"
         def tomcatStop = "${tomcatHome}/bin/shutdown.sh"
@@ -50,25 +50,11 @@ pipeline {
 				
 				stage("bulding docker image and deploy") {
                     steps {
-                          sh "scp -o StrictHostKeyChecking=no target/petclinic.war ec2-user@${dockerDevIp}:/home/ec2-user/docker/myweb.war"
-                          sh "scp -o StrictHostKeyChecking=no Dockerfile ec2-user@${dockerDevIp}:/home/ec2-user/docker/Dockerfile"
-                script                
-                {
-                                    sshPublisher(
-                                            continueOnError: false, failOnError: true,
-                                            publishers:  [
-                                                sshPublisherDesc(
-                                                    configName: 'dockerslave',
-                                                    verbose: true,
-                                                    transfers:[   
-                                                        sshTransfer(
-								execCommand:" docker stop petclinic8 && docker rm petclinic8 && docker system prune -a --force && cd docker && docker build -t petclinic . --no-cache && docker run -itd --name petclinic8 -p 8080:8080 petclinic"
-                                                        )
-                                                    ]
-                                                )
-                                            ]
-                                    )        
-                }
+                         // sh "scp -o StrictHostKeyChecking=no target/petclinic.war ec2-user@${dockerDevIp}:/home/ec2-user/docker/myweb.war"
+                          //sh "scp -o StrictHostKeyChecking=no Dockerfile ec2-user@${dockerDevIp}:/home/ec2-user/docker/Dockerfile"
+              	 		sshagent(['Docker_ec2-user']) {
+					sh "scp -o StrictHostKeyChecking=no target/petclinic.war ec2-user@${dockerDevIp}:/home/ec2-user/docker/myweb.war"	   
+				   }
                     }
 
             } 
