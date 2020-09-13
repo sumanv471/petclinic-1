@@ -53,6 +53,23 @@ pipeline {
               	 				sshagent(['Docker_ec2-user']) {
 							sh "scp -o StrictHostKeyChecking=no target/petclinic.war ec2-user@${dockerDevIp}:/home/ec2-user/docker/myweb.war"	   
 				   		        sh "scp -o StrictHostKeyChecking=no Dockerfile ec2-user@${dockerDevIp}:/home/ec2-user/docker/Dockerfile"
+						 sshPublisher(
+                                            continueOnError: false, failOnError: true,
+                                            publishers:  [
+                                                sshPublisherDesc(
+                                                    configName: 'dockerslave',
+                                                    verbose: true,
+                                                    transfers:[   
+                                                        sshTransfer(
+								execCommand:" docker stop petclinic8 && docker rm petclinic8 && docker system prune -a --force && cd docker && docker build -t petclinic . --no-cache && docker run -itd --name petclinic8 -p 8080:8080 petclinic"
+                                                        )
+                                                    ]
+                                                )
+                                            ]
+                                    )        
+						
+						
+						
 						}
                   			}
 
